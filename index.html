@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Eroğlu İş Takip</title>
+
+<style>
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#000;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+.app{
+  width:min(100vw,430px);
+  margin:auto;
+  position:relative;
+  min-height:100vh;
+  background:#000;
+}
+
+.dashboard{
+  width:100%;
+  display:block;
+}
+
+.plus{
+  position:absolute;
+  right:5.5%;
+  bottom:8.5%;
+  width:12%;
+  aspect-ratio:1;
+  border:0;
+  border-radius:50%;
+  background:transparent;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.82);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:99;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.sheet{
+  width:min(430px,100%);
+  background:#0b0e12;
+  border:1px solid #222831;
+  border-radius:26px 26px 0 0;
+  padding:20px 16px 30px;
+  color:white;
+}
+
+.head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.head h2{
+  margin:0;
+  font-size:21px;
+}
+
+.close{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  border:1px solid #272d35;
+  background:#14191f;
+  color:white;
+  font-size:22px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.field{
+  margin-bottom:10px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+label{
+  display:block;
+  color:#979da6;
+  font-size:11px;
+  margin:0 0 5px 2px;
+}
+
+input{
+  width:100%;
+  border:1px solid #272d35;
+  background:#11161c;
+  color:white;
+  border-radius:13px;
+  padding:13px;
+  font-size:15px;
+}
+
+.save{
+  width:100%;
+  margin-top:10px;
+  border:0;
+  border-radius:15px;
+  padding:15px;
+  background:#f12e36;
+  color:white;
+  font-weight:800;
+  font-size:15px;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:90px;
+  transform:translateX(-50%);
+  background:#151a20;
+  color:white;
+  padding:10px 15px;
+  border:1px solid #282e36;
+  border-radius:999px;
+  display:none;
+  z-index:120;
+}
+
+.toast.show{
+  display:block;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <img
+    class="dashboard"
+    src="dashboard.jpg"
+    alt="Eroğlu İş Takip"
+  >
+
+  <button
+    class="plus"
+    onclick="openModal()"
+    aria-label="Yeni proje">
+  </button>
+
+</div>
+
+<div class="modal" id="modal">
+
+  <div class="sheet">
+
+    <div class="head">
+      <h2>Yeni Proje</h2>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+
+    <div class="grid">
+
+      <div class="field full">
+        <label>Proje adı</label>
+        <input id="projectName" placeholder="Örn. Güler Aura 2">
+      </div>
+
+      <div class="field full">
+        <label>Konum</label>
+        <input id="location" placeholder="İl / İlçe">
+      </div>
+
+      <div class="field">
+        <label>Blok</label>
+        <input id="blocks" type="number" value="1">
+      </div>
+
+      <div class="field">
+        <label>Bodrum kat</label>
+        <input id="basement" type="number" value="1">
+      </div>
+
+      <div class="field">
+        <label>Zemin kat</label>
+        <input id="ground" type="number" value="1">
+      </div>
+
+      <div class="field">
+        <label>Normal kat</label>
+        <input id="floors" type="number" value="13">
+      </div>
+
+      <div class="field">
+        <label>Daire / kat</label>
+        <input id="units" type="number" value="2">
+      </div>
+
+      <div class="field">
+        <label>Personel</label>
+        <input id="workers" type="number" value="0">
+      </div>
+
+      <div class="field full">
+        <label>İlerleme %</label>
+        <input id="progress" type="number" value="0">
+      </div>
+
+    </div>
+
+    <button class="save" onclick="saveProject()">
+      Projeyi Kaydet
+    </button>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY="eroglu-projects";
+
+function openModal(){
+  document.getElementById("modal").classList.add("show");
+}
+
+function closeModal(){
+  document.getElementById("modal").classList.remove("show");
+}
+
+function saveProject(){
+
+  const project={
+    name:document.getElementById("projectName").value || "Yeni Proje",
+    location:document.getElementById("location").value,
+    blocks:Number(document.getElementById("blocks").value),
+    basement:Number(document.getElementById("basement").value),
+    ground:Number(document.getElementById("ground").value),
+    floors:Number(document.getElementById("floors").value),
+    units:Number(document.getElementById("units").value),
+    workers:Number(document.getElementById("workers").value),
+    progress:Number(document.getElementById("progress").value),
+    created:Date.now()
+  };
+
+  const projects=JSON.parse(localStorage.getItem(KEY) || "[]");
+
+  projects.unshift(project);
+
+  localStorage.setItem(KEY,JSON.stringify(projects));
+
+  closeModal();
+
+  toast("Proje kaydedildi");
+}
+
+function toast(text){
+
+  const el=document.getElementById("toast");
+
+  el.textContent=text;
+
+  el.classList.add("show");
+
+  setTimeout(()=>{
+    el.classList.remove("show");
+  },1500);
+}
+</script>
+
+</body>
+</html>
