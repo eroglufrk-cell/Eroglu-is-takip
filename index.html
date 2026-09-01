@@ -1,289 +1,2045 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="tr">
+
 <head>
-<meta charset="UTF-8">
+
+<meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#000000">
+
+<meta name="theme-color" content="#030507">
+
 <title>Eroğlu İş Takip</title>
 
 <style>
+
+:root{
+
+  --bg:#030507;
+
+  --panel:#0b0e12;
+
+  --panel2:#101419;
+
+  --line:#20262e;
+
+  --red:#ef2f38;
+
+  --red2:#ff4a51;
+
+  --text:#f7f7f8;
+
+  --muted:#9ba0a8;
+
+}
+
 *{box-sizing:border-box}
 
 html,body{
+
   margin:0;
-  padding:0;
+
   background:#000;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+
+  color:var(--text);
+
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+
 }
+
+body{min-height:100vh}
 
 .app{
-  width:min(100vw,430px);
+
+  max-width:430px;
+
   margin:auto;
-  position:relative;
+
+  padding:20px 14px 112px;
+
   min-height:100vh;
-  background:#000;
+
+  background:
+
+    radial-gradient(circle at 50% -5%,#10161d 0,#05070a 28%,#020304 65%),
+
+    #020304;
+
 }
 
-.dashboard{
-  width:100%;
-  display:block;
+/* HEADER */
+
+.header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:24px;
+
 }
 
-.plus{
+.brand{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+}
+
+.logo{
+
+  width:58px;
+
+  height:58px;
+
+  border-radius:18px;
+
+  position:relative;
+
+  display:grid;
+
+  place-items:center;
+
+  background:
+
+    radial-gradient(circle,#1b2027 0 44%,#090b0e 45% 57%,#1b2027 58% 68%,#07090b 69%);
+
+  box-shadow:
+
+    0 0 5px #e93038,
+
+    0 0 18px rgba(239,47,56,.55),
+
+    inset 0 0 16px #000;
+
+  border:1px solid #242a31;
+
+}
+
+.logo:before{
+
+  content:"";
+
   position:absolute;
-  right:5.5%;
-  bottom:8.5%;
-  width:12%;
-  aspect-ratio:1;
-  border:0;
+
+  width:44px;
+
+  height:44px;
+
+  border:3px solid var(--red);
+
   border-radius:50%;
-  background:transparent;
+
+  box-shadow:
+
+    0 0 5px var(--red),
+
+    0 0 12px rgba(239,47,56,.8),
+
+    inset 0 0 5px rgba(239,47,56,.6);
+
 }
+
+.logo span{
+
+  position:relative;
+
+  z-index:2;
+
+  color:#b72b31;
+
+  font-size:40px;
+
+  font-weight:900;
+
+  line-height:1;
+
+  text-shadow:0 2px 5px #000;
+
+}
+
+.brandTitle{
+
+  font-size:21px;
+
+  font-weight:900;
+
+  line-height:.95;
+
+  letter-spacing:.4px;
+
+}
+
+.brandSub{
+
+  font-size:13px;
+
+  margin-top:6px;
+
+  color:#d7d9dc;
+
+}
+
+.headerRight{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+}
+
+.bell{
+
+  position:relative;
+
+  font-size:25px;
+
+  color:#c8ccd1;
+
+}
+
+.bell:after{
+
+  content:"";
+
+  position:absolute;
+
+  right:-1px;
+
+  top:1px;
+
+  width:7px;
+
+  height:7px;
+
+  border-radius:50%;
+
+  background:var(--red);
+
+  box-shadow:0 0 8px var(--red);
+
+}
+
+.avatar{
+
+  width:44px;
+
+  height:44px;
+
+  border-radius:50%;
+
+  border:1px solid #2d333b;
+
+  display:grid;
+
+  place-items:center;
+
+  background:#101318;
+
+  font-weight:700;
+
+}
+
+/* TITLES */
+
+.label{
+
+  font-size:13px;
+
+  font-weight:700;
+
+  margin:0 2px 9px;
+
+}
+
+.sectionHead{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  margin:22px 2px 10px;
+
+}
+
+.sectionHead strong{
+
+  font-size:14px;
+
+}
+
+.sectionHead span{
+
+  color:var(--red);
+
+  font-size:12px;
+
+  font-weight:700;
+
+}
+
+/* OVERVIEW */
+
+.overview{
+
+  display:grid;
+
+  grid-template-columns:35% 65%;
+
+  border-radius:18px;
+
+  overflow:hidden;
+
+  border:1px solid #1b2128;
+
+  background:
+
+    linear-gradient(145deg,#0d1115,#080a0d);
+
+  box-shadow:0 16px 40px rgba(0,0,0,.28);
+
+}
+
+.progressSide{
+
+  display:grid;
+
+  place-items:center;
+
+  min-height:205px;
+
+  border-right:1px solid var(--line);
+
+}
+
+.ring{
+
+  --p:68;
+
+  width:132px;
+
+  height:132px;
+
+  border-radius:50%;
+
+  display:grid;
+
+  place-items:center;
+
+  position:relative;
+
+  background:
+
+    conic-gradient(
+
+      var(--red) 0 calc(var(--p)*1%),
+
+      #292e34 calc(var(--p)*1%) 100%
+
+    );
+
+}
+
+.ring:before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:11px;
+
+  border-radius:50%;
+
+  background:#080b0e;
+
+  box-shadow:inset 0 0 0 1px #10151a;
+
+}
+
+.ringInner{
+
+  position:relative;
+
+  text-align:center;
+
+  z-index:2;
+
+}
+
+.ringValue{
+
+  font-size:40px;
+
+  line-height:1;
+
+  font-weight:900;
+
+  letter-spacing:-1px;
+
+}
+
+.ringText{
+
+  font-size:9px;
+
+  color:#d0d3d7;
+
+  margin-top:7px;
+
+}
+
+.stats{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+}
+
+.stat{
+
+  min-height:102px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  padding:15px 12px;
+
+}
+
+.stat:nth-child(1),
+
+.stat:nth-child(2){
+
+  border-bottom:1px solid var(--line);
+
+}
+
+.stat:nth-child(1),
+
+.stat:nth-child(3){
+
+  border-right:1px solid var(--line);
+
+}
+
+.ico{
+
+  color:var(--red);
+
+  font-size:27px;
+
+  width:31px;
+
+  text-align:center;
+
+}
+
+.statValue{
+
+  font-size:29px;
+
+  font-weight:850;
+
+  line-height:1;
+
+}
+
+.statText{
+
+  font-size:9px;
+
+  color:#afb4ba;
+
+  margin-top:6px;
+
+}
+
+/* PROJECT */
+
+.projectCard{
+
+  border:1px solid #1e242b;
+
+  border-radius:17px;
+
+  overflow:hidden;
+
+  background:
+
+    linear-gradient(140deg,#0f1318,#080a0d);
+
+  display:grid;
+
+  grid-template-columns:31% 69%;
+
+  box-shadow:0 15px 35px rgba(0,0,0,.28);
+
+}
+
+.photo{
+
+  min-height:164px;
+
+  background:
+
+    linear-gradient(#34495c 0 25%,#202832 48%,#07090b 100%);
+
+  position:relative;
+
+  overflow:hidden;
+
+}
+
+.building{
+
+  position:absolute;
+
+  left:50%;
+
+  bottom:4px;
+
+  transform:translateX(-50%);
+
+  width:82px;
+
+  height:145px;
+
+  filter:drop-shadow(0 12px 14px #000);
+
+}
+
+.buildingBody{
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+
+    repeating-linear-gradient(
+
+      to bottom,
+
+      #242b33 0 8px,
+
+      #101419 8px 11px,
+
+      #dfb36f 11px 14px,
+
+      #151a20 14px 20px
+
+    );
+
+  border-left:6px solid #303842;
+
+  border-right:6px solid #171c21;
+
+  clip-path:polygon(12% 4%,88% 0,100% 100%,0 100%);
+
+}
+
+.buildingBody:before,
+
+.buildingBody:after{
+
+  content:"";
+
+  position:absolute;
+
+  top:4px;
+
+  bottom:0;
+
+  width:10px;
+
+  background:rgba(0,0,0,.28);
+
+}
+
+.buildingBody:before{left:20px}
+
+.buildingBody:after{right:20px}
+
+.projectInfo{
+
+  padding:14px 13px;
+
+}
+
+.projectTop{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  gap:8px;
+
+}
+
+.projectName{
+
+  font-size:19px;
+
+  font-weight:900;
+
+  letter-spacing:-.3px;
+
+}
+
+.status{
+
+  font-size:9px;
+
+  padding:5px 9px;
+
+  border-radius:999px;
+
+  background:#61171b;
+
+  color:#ff7c82;
+
+  height:max-content;
+
+}
+
+.location{
+
+  color:#a7acb3;
+
+  font-size:11px;
+
+  margin-top:8px;
+
+}
+
+.progressLine{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:9px;
+
+  margin-top:14px;
+
+}
+
+.bar{
+
+  flex:1;
+
+  height:6px;
+
+  border-radius:999px;
+
+  background:#292f36;
+
+  overflow:hidden;
+
+}
+
+.bar span{
+
+  display:block;
+
+  width:68%;
+
+  height:100%;
+
+  border-radius:999px;
+
+  background:linear-gradient(90deg,var(--red),var(--red2));
+
+}
+
+.percent{
+
+  color:var(--red);
+
+  font-weight:850;
+
+}
+
+.metaGrid{
+
+  display:grid;
+
+  grid-template-columns:repeat(4,1fr);
+
+  margin-top:14px;
+
+}
+
+.meta{
+
+  text-align:center;
+
+  border-right:1px solid var(--line);
+
+}
+
+.meta:last-child{
+
+  border-right:0;
+
+}
+
+.metaIcon{
+
+  font-size:17px;
+
+  color:#d0d3d6;
+
+}
+
+.meta strong{
+
+  display:block;
+
+  font-size:13px;
+
+  margin-top:2px;
+
+}
+
+.meta small{
+
+  font-size:8px;
+
+  color:#aeb2b7;
+
+}
+
+/* DETAIL */
+
+.detailCard{
+
+  display:grid;
+
+  grid-template-columns:43% 57%;
+
+  border:1px solid #1e242b;
+
+  border-radius:17px;
+
+  margin-top:11px;
+
+  background:linear-gradient(145deg,#0d1115,#07090b);
+
+  overflow:hidden;
+
+}
+
+.detailLeft{
+
+  padding:15px 13px;
+
+  border-right:1px solid var(--line);
+
+}
+
+.detailTitle{
+
+  font-size:10px;
+
+  font-weight:800;
+
+  margin-bottom:14px;
+
+}
+
+.drow{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  font-size:11px;
+
+  margin:12px 0;
+
+}
+
+.drow strong{
+
+  font-size:14px;
+
+}
+
+.sub{
+
+  font-size:9px;
+
+  color:#a8adb4;
+
+  margin-top:-7px;
+
+}
+
+.rule{
+
+  height:1px;
+
+  background:#272d34;
+
+  margin:16px 0;
+
+}
+
+.total{
+
+  color:var(--red);
+
+}
+
+.towerArea{
+
+  min-height:252px;
+
+  position:relative;
+
+}
+
+.tower{
+
+  position:absolute;
+
+  width:94px;
+
+  height:224px;
+
+  left:14px;
+
+  bottom:14px;
+
+  background:
+
+    repeating-linear-gradient(
+
+      to bottom,
+
+      #20262d 0 8px,
+
+      #11151a 8px 11px,
+
+      #e0b56f 11px 14px,
+
+      #151a1f 14px 18px
+
+    );
+
+  border-left:7px solid #2c333a;
+
+  border-right:7px solid #12161b;
+
+  box-shadow:0 12px 25px #000;
+
+}
+
+.floor{
+
+  position:absolute;
+
+  left:130px;
+
+  font-size:8px;
+
+  white-space:nowrap;
+
+  color:#d2d5d8;
+
+}
+
+.floor:before{
+
+  content:"";
+
+  position:absolute;
+
+  width:23px;
+
+  height:1px;
+
+  background:#646970;
+
+  left:-31px;
+
+  top:5px;
+
+}
+
+.f13{top:34px}
+
+.f2{top:91px}
+
+.f1{top:124px}
+
+.f0{top:171px;color:var(--red)}
+
+.fb{top:216px}
+
+/* PROGRESS ITEMS */
+
+.works{
+
+  display:grid;
+
+  grid-template-columns:repeat(7,1fr);
+
+  border-radius:14px;
+
+  overflow:hidden;
+
+  border:1px solid #1e242b;
+
+  background:#0c0f13;
+
+}
+
+.work{
+
+  text-align:center;
+
+  padding:10px 3px 9px;
+
+  border-right:1px solid var(--line);
+
+}
+
+.work:last-child{
+
+  border-right:0;
+
+}
+
+.workIcon{
+
+  color:var(--red);
+
+  font-size:22px;
+
+  height:26px;
+
+}
+
+.workName{
+
+  font-size:7px;
+
+  line-height:1.15;
+
+  height:26px;
+
+  display:grid;
+
+  place-items:center;
+
+}
+
+.workValue{
+
+  font-size:12px;
+
+  margin:3px 0 7px;
+
+}
+
+.smallBar{
+
+  height:4px;
+
+  border-radius:999px;
+
+  margin:0 4px;
+
+  background:#292e35;
+
+  overflow:hidden;
+
+}
+
+.smallBar span{
+
+  display:block;
+
+  height:100%;
+
+  background:var(--red);
+
+  border-radius:999px;
+
+}
+
+/* FAB */
+
+.fab{
+
+  position:fixed;
+
+  z-index:20;
+
+  width:59px;
+
+  height:59px;
+
+  border-radius:50%;
+
+  border:0;
+
+  right:max(18px,calc((100vw - 430px)/2 + 18px));
+
+  bottom:91px;
+
+  color:white;
+
+  font-size:37px;
+
+  background:linear-gradient(180deg,#ff3b43,#e51f27);
+
+  box-shadow:
+
+    0 12px 30px rgba(239,47,56,.34),
+
+    inset 0 1px 0 rgba(255,255,255,.18);
+
+}
+
+/* NAV */
+
+.nav{
+
+  position:fixed;
+
+  left:50%;
+
+  transform:translateX(-50%);
+
+  bottom:0;
+
+  width:min(100%,430px);
+
+  display:grid;
+
+  grid-template-columns:repeat(4,1fr);
+
+  padding:10px 8px calc(10px + env(safe-area-inset-bottom));
+
+  background:rgba(8,10,13,.98);
+
+  border-top:1px solid #1d2228;
+
+  z-index:10;
+
+}
+
+.navItem{
+
+  text-align:center;
+
+  color:#999fa7;
+
+  font-size:10px;
+
+}
+
+.navIcon{
+
+  font-size:23px;
+
+  height:30px;
+
+}
+
+.navItem.active{
+
+  color:var(--red);
+
+}
+
+.navItem.active:after{
+
+  content:"";
+
+  display:block;
+
+  width:30px;
+
+  height:3px;
+
+  margin:6px auto 0;
+
+  border-radius:999px;
+
+  background:var(--red);
+
+}
+
+/* MODAL */
 
 .modal{
+
   position:fixed;
+
   inset:0;
+
+  z-index:100;
+
   background:rgba(0,0,0,.82);
+
   display:none;
+
   align-items:flex-end;
+
   justify-content:center;
-  z-index:99;
+
 }
 
 .modal.show{
+
   display:flex;
+
 }
 
 .sheet{
-  width:min(430px,100%);
-  background:#0b0e12;
-  border:1px solid #222831;
+
+  width:min(100%,430px);
+
+  max-height:88vh;
+
+  overflow:auto;
+
+  padding:19px 16px 30px;
+
   border-radius:26px 26px 0 0;
-  padding:20px 16px 30px;
-  color:white;
+
+  background:#0b0f13;
+
+  border:1px solid #252b32;
+
 }
 
-.head{
+.sheetHead{
+
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
-  margin-bottom:18px;
+
+  margin-bottom:16px;
+
 }
 
-.head h2{
+.sheetHead h2{
+
   margin:0;
-  font-size:21px;
+
+  font-size:20px;
+
 }
 
 .close{
+
   width:38px;
+
   height:38px;
+
   border-radius:12px;
-  border:1px solid #272d35;
-  background:#14191f;
+
+  border:1px solid #292f36;
+
   color:white;
+
+  background:#14191f;
+
   font-size:22px;
+
 }
 
-.grid{
+.form{
+
   display:grid;
+
   grid-template-columns:1fr 1fr;
+
   gap:10px;
+
 }
 
 .field{
-  margin-bottom:10px;
+
+  margin-bottom:7px;
+
 }
 
 .full{
+
   grid-column:1/-1;
+
 }
 
 label{
+
   display:block;
-  color:#979da6;
-  font-size:11px;
+
+  font-size:10px;
+
+  color:#9ca2aa;
+
   margin:0 0 5px 2px;
+
 }
 
 input{
+
   width:100%;
-  border:1px solid #272d35;
-  background:#11161c;
+
+  padding:12px;
+
+  border-radius:12px;
+
+  border:1px solid #292f36;
+
+  background:#11161b;
+
   color:white;
-  border-radius:13px;
-  padding:13px;
-  font-size:15px;
+
+  outline:none;
+
 }
 
 .save{
+
   width:100%;
-  margin-top:10px;
+
+  margin-top:12px;
+
+  padding:14px;
+
   border:0;
-  border-radius:15px;
-  padding:15px;
-  background:#f12e36;
+
+  border-radius:14px;
+
+  background:var(--red);
+
   color:white;
-  font-weight:800;
-  font-size:15px;
+
+  font-weight:850;
+
 }
 
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:90px;
-  transform:translateX(-50%);
-  background:#151a20;
-  color:white;
-  padding:10px 15px;
-  border:1px solid #282e36;
-  border-radius:999px;
-  display:none;
-  z-index:120;
+@media(max-width:375px){
+
+  .ring{
+
+    width:112px;
+
+    height:112px;
+
+  }
+
+  .ringValue{
+
+    font-size:34px;
+
+  }
+
+  .projectName{
+
+    font-size:16px;
+
+  }
+
 }
 
-.toast.show{
-  display:block;
-}
 </style>
+
 </head>
 
 <body>
 
 <div class="app">
 
-  <img
-    class="dashboard"
-    src="dashboard.jpg"
-    alt="Eroğlu İş Takip"
-  >
+<header class="header">
 
-  <button
-    class="plus"
-    onclick="openModal()"
-    aria-label="Yeni proje">
-  </button>
+  <div class="brand">
+
+    <div class="logo">
+
+      <span>e</span>
+
+    </div>
+
+    <div>
+
+      <div class="brandTitle">EROĞLU</div>
+
+      <div class="brandSub">MÜHENDİSLİK</div>
+
+    </div>
+
+  </div>
+
+  <div class="headerRight">
+
+    <div class="bell">♧</div>
+
+    <div class="avatar">ME</div>
+
+  </div>
+
+</header>
+
+<div class="label">GENEL ÖZET</div>
+
+<section class="overview">
+
+  <div class="progressSide">
+
+    <div class="ring" id="ring">
+
+      <div class="ringInner">
+
+        <div class="ringValue">%<span id="overall">68</span></div>
+
+        <div class="ringText">GENEL İLERLEME</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+
+      <div class="ico">▥</div>
+
+      <div>
+
+        <div class="statValue" id="activeProjects">1</div>
+
+        <div class="statText">AKTİF PROJE</div>
+
+      </div>
+
+    </div>
+
+    <div class="stat">
+
+      <div class="ico">♜</div>
+
+      <div>
+
+        <div class="statValue" id="siteCount">1</div>
+
+        <div class="statText">ŞANTİYE</div>
+
+      </div>
+
+    </div>
+
+    <div class="stat">
+
+      <div class="ico">☑</div>
+
+      <div>
+
+        <div class="statValue" id="todayCount">24</div>
+
+        <div class="statText">BUGÜNKÜ İŞ</div>
+
+      </div>
+
+    </div>
+
+    <div class="stat">
+
+      <div class="ico">♙</div>
+
+      <div>
+
+        <div class="statValue" id="workerTop">18</div>
+
+        <div class="statText">ÇALIŞAN</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<div class="sectionHead">
+
+  <strong>AKTİF PROJE</strong>
+
+  <span>Tümünü Gör →</span>
 
 </div>
+
+<section class="projectCard">
+
+  <div class="photo">
+
+    <div class="building">
+
+      <div class="buildingBody"></div>
+
+    </div>
+
+  </div>
+
+  <div class="projectInfo">
+
+    <div class="projectTop">
+
+      <div class="projectName" id="projectName">
+
+        GÜLER AURA 1
+
+      </div>
+
+      <div class="status">
+
+        Aktif
+
+      </div>
+
+    </div>
+
+    <div class="location" id="location">
+
+      ◉ Ataşehir, İstanbul
+
+    </div>
+
+    <div class="progressLine">
+
+      <div class="bar">
+
+        <span id="projectBar"></span>
+
+      </div>
+
+      <div class="percent">
+
+        %<span id="projectPercent">68</span>
+
+      </div>
+
+    </div>
+
+    <div class="metaGrid">
+
+      <div class="meta">
+
+        <div class="metaIcon">▥</div>
+
+        <strong id="blockMeta">1</strong>
+
+        <small>BLOK</small>
+
+      </div>
+
+      <div class="meta">
+
+        <div class="metaIcon">▱</div>
+
+        <strong id="floorMeta">B+Z+13</strong>
+
+        <small>KAT</small>
+
+      </div>
+
+      <div class="meta">
+
+        <div class="metaIcon">⌂</div>
+
+        <strong id="unitMeta">28</strong>
+
+        <small>DAİRE</small>
+
+      </div>
+
+      <div class="meta">
+
+        <div class="metaIcon">♙</div>
+
+        <strong id="workerMeta">18</strong>
+
+        <small>PERSONEL</small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="detailCard">
+
+  <div class="detailLeft">
+
+    <div class="detailTitle">
+
+      YAPI DETAYI
+
+    </div>
+
+    <div class="drow">
+
+      <span>▥ &nbsp; Blok</span>
+
+      <strong id="blockDetail">1</strong>
+
+    </div>
+
+    <div class="drow">
+
+      <span>▤ &nbsp; Bodrum Kat</span>
+
+      <strong id="basementDetail">1</strong>
+
+    </div>
+
+    <div class="drow">
+
+      <span>⌂ &nbsp; Zemin Kat</span>
+
+      <strong id="groundDetail">1</strong>
+
+    </div>
+
+    <div class="drow">
+
+      <span>▱ &nbsp; Normal Kat</span>
+
+      <strong id="floorDetail">13</strong>
+
+    </div>
+
+    <div class="sub" id="floorRange">
+
+      (1. Kat - 13. Kat)
+
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="drow">
+
+      <span>⌂ &nbsp; Her Katta Daire</span>
+
+      <strong id="unitsPerFloor">2</strong>
+
+    </div>
+
+    <div class="drow total">
+
+      <span>⌂ &nbsp; Toplam Daire</span>
+
+      <strong id="totalUnits">28</strong>
+
+    </div>
+
+  </div>
+
+  <div class="towerArea">
+
+    <div class="tower"></div>
+
+    <div class="floor f13">
+
+      13. Kat (Daire 2)
+
+    </div>
+
+    <div class="floor f2">
+
+      2. Kat (Daire 2)
+
+    </div>
+
+    <div class="floor f1">
+
+      1. Kat (Daire 2)
+
+    </div>
+
+    <div class="floor f0">
+
+      Zemin Kat (Daire 2)
+
+    </div>
+
+    <div class="floor fb">
+
+      Bodrum Kat
+
+    </div>
+
+  </div>
+
+</section>
+
+<div class="sectionHead">
+
+  <strong>İLERLEME DAĞILIMI</strong>
+
+  <span>Tümünü Gör →</span>
+
+</div>
+
+<section class="works">
+
+  <div class="work">
+
+    <div class="workIcon">∪</div>
+
+    <div class="workName">Kanal - Boru</div>
+
+    <div class="workValue">%100</div>
+
+    <div class="smallBar"><span style="width:100%"></span></div>
+
+  </div>
+
+  <div class="work">
+
+    <div class="workIcon">▥</div>
+
+    <div class="workName">Kablo Çekimi</div>
+
+    <div class="workValue">%75</div>
+
+    <div class="smallBar"><span style="width:75%"></span></div>
+
+  </div>
+
+  <div class="work">
+
+    <div class="workIcon">ϟ</div>
+
+    <div class="workName">Ana Kolon</div>
+
+    <div class="workValue">%60</div>
+
+    <div class="smallBar"><span style="width:60%"></span></div>
+
+  </div>
+
+  <div class="work">
+
+    <div class="workIcon">⌁</div>
+
+    <div class="workName">Zayıf Akım</div>
+
+    <div class="workValue">%50</div>
+
+    <div class="smallBar"><span style="width:50%"></span></div>
+
+  </div>
+
+  <div class="work">
+
+    <div class="workIcon">♧</div>
+
+    <div class="workName">Kuvvetli Akım</div>
+
+    <div class="workValue">%40</div>
+
+    <div class="smallBar"><span style="width:40%"></span></div>
+
+  </div>
+
+  <div class="work">
+
+    <div class="workIcon">▦</div>
+
+    <div class="workName">Pano Montajı</div>
+
+    <div class="workValue">%20</div>
+
+    <div class="smallBar"><span style="width:20%"></span></div>
+
+  </div>
+
+  <div class="work">
+
+    <div class="workIcon">⊙</div>
+
+    <div class="workName">Anahtar - Priz</div>
+
+    <div class="workValue">%10</div>
+
+    <div class="smallBar"><span style="width:10%"></span></div>
+
+  </div>
+
+</section>
+
+</div>
+
+<button class="fab" onclick="openModal()">
+
++
+
+</button>
+
+<nav class="nav">
+
+  <div class="navItem active">
+
+    <div class="navIcon">▦</div>
+
+    Genel Bakış
+
+  </div>
+
+  <div class="navItem">
+
+    <div class="navIcon">▱</div>
+
+    Projeler
+
+  </div>
+
+  <div class="navItem">
+
+    <div class="navIcon">♙</div>
+
+    Ekip
+
+  </div>
+
+  <div class="navItem">
+
+    <div class="navIcon">◎</div>
+
+    Profil
+
+  </div>
+
+</nav>
 
 <div class="modal" id="modal">
 
   <div class="sheet">
 
-    <div class="head">
-      <h2>Yeni Proje</h2>
-      <button class="close" onclick="closeModal()">×</button>
+    <div class="sheetHead">
+
+      <h2>
+
+        Yeni Proje
+
+      </h2>
+
+      <button class="close" onclick="closeModal()">
+
+        ×
+
+      </button>
+
     </div>
 
-    <div class="grid">
+    <div class="form">
 
       <div class="field full">
+
         <label>Proje adı</label>
-        <input id="projectName" placeholder="Örn. Güler Aura 2">
+
+        <input id="fName" value="GÜLER AURA 1">
+
       </div>
 
       <div class="field full">
+
         <label>Konum</label>
-        <input id="location" placeholder="İl / İlçe">
+
+        <input id="fLocation" value="Ataşehir, İstanbul">
+
       </div>
 
       <div class="field">
+
         <label>Blok</label>
-        <input id="blocks" type="number" value="1">
+
+        <input id="fBlocks" type="number" value="1">
+
       </div>
 
       <div class="field">
-        <label>Bodrum kat</label>
-        <input id="basement" type="number" value="1">
+
+        <label>Bodrum</label>
+
+        <input id="fBasement" type="number" value="1">
+
       </div>
 
       <div class="field">
-        <label>Zemin kat</label>
-        <input id="ground" type="number" value="1">
+
+        <label>Zemin</label>
+
+        <input id="fGround" type="number" value="1">
+
       </div>
 
       <div class="field">
+
         <label>Normal kat</label>
-        <input id="floors" type="number" value="13">
+
+        <input id="fFloors" type="number" value="13">
+
       </div>
 
       <div class="field">
+
         <label>Daire / kat</label>
-        <input id="units" type="number" value="2">
+
+        <input id="fUnits" type="number" value="2">
+
       </div>
 
       <div class="field">
+
         <label>Personel</label>
-        <input id="workers" type="number" value="0">
+
+        <input id="fWorkers" type="number" value="18">
+
       </div>
 
-      <div class="field full">
+      <div class="field">
+
+        <label>Bugünkü iş</label>
+
+        <input id="fToday" type="number" value="24">
+
+      </div>
+
+      <div class="field">
+
         <label>İlerleme %</label>
-        <input id="progress" type="number" value="0">
+
+        <input id="fProgress" type="number" value="68">
+
       </div>
 
     </div>
 
     <button class="save" onclick="saveProject()">
+
       Projeyi Kaydet
+
     </button>
 
   </div>
 
 </div>
 
-<div class="toast" id="toast"></div>
-
 <script>
-const KEY="eroglu-projects";
+
+const KEY="eroglu-project";
+
+const modal=document.getElementById("modal");
 
 function openModal(){
-  document.getElementById("modal").classList.add("show");
+
+  modal.classList.add("show");
+
 }
 
 function closeModal(){
-  document.getElementById("modal").classList.remove("show");
+
+  modal.classList.remove("show");
+
 }
 
 function saveProject(){
 
-  const project={
-    name:document.getElementById("projectName").value || "Yeni Proje",
-    location:document.getElementById("location").value,
-    blocks:Number(document.getElementById("blocks").value),
-    basement:Number(document.getElementById("basement").value),
-    ground:Number(document.getElementById("ground").value),
-    floors:Number(document.getElementById("floors").value),
-    units:Number(document.getElementById("units").value),
-    workers:Number(document.getElementById("workers").value),
-    progress:Number(document.getElementById("progress").value),
-    created:Date.now()
+  const p={
+
+    name:fName.value || "Yeni Proje",
+
+    location:fLocation.value || "",
+
+    blocks:Number(fBlocks.value)||1,
+
+    basement:Number(fBasement.value)||0,
+
+    ground:Number(fGround.value)||0,
+
+    floors:Number(fFloors.value)||0,
+
+    units:Number(fUnits.value)||0,
+
+    workers:Number(fWorkers.value)||0,
+
+    today:Number(fToday.value)||0,
+
+    progress:Math.max(
+
+      0,
+
+      Math.min(
+
+        100,
+
+        Number(fProgress.value)||0
+
+      )
+
+    )
+
   };
 
-  const projects=JSON.parse(localStorage.getItem(KEY) || "[]");
+  p.total=
 
-  projects.unshift(project);
+    (p.ground+p.floors) *
 
-  localStorage.setItem(KEY,JSON.stringify(projects));
+    p.units *
+
+    p.blocks;
+
+  localStorage.setItem(
+
+    KEY,
+
+    JSON.stringify(p)
+
+  );
+
+  render(p);
 
   closeModal();
 
-  toast("Proje kaydedildi");
 }
 
-function toast(text){
+function render(p){
 
-  const el=document.getElementById("toast");
+  projectName.textContent=p.name;
 
-  el.textContent=text;
+  location.textContent=
 
-  el.classList.add("show");
+    "◉ "+p.location;
 
-  setTimeout(()=>{
-    el.classList.remove("show");
-  },1500);
+  overall.textContent=p.progress;
+
+  projectPercent.textContent=p.progress;
+
+  projectBar.style.width=
+
+    p.progress+"%";
+
+  ring.style.setProperty(
+
+    "--p",
+
+    p.progress
+
+  );
+
+  siteCount.textContent=
+
+    p.blocks;
+
+  todayCount.textContent=
+
+    p.today;
+
+  workerTop.textContent=
+
+    p.workers;
+
+  workerMeta.textContent=
+
+    p.workers;
+
+  blockMeta.textContent=
+
+    p.blocks;
+
+  blockDetail.textContent=
+
+    p.blocks;
+
+  basementDetail.textContent=
+
+    p.basement;
+
+  groundDetail.textContent=
+
+    p.ground;
+
+  floorDetail.textContent=
+
+    p.floors;
+
+  unitsPerFloor.textContent=
+
+    p.units;
+
+  unitMeta.textContent=
+
+    p.total;
+
+  totalUnits.textContent=
+
+    p.total;
+
+  floorMeta.textContent=
+
+    (p.basement ? "B+" : "")+
+
+    (p.ground ? "Z+" : "")+
+
+    p.floors;
+
+  floorRange.textContent=
+
+    "(1. Kat - "+
+
+    p.floors+
+
+    ". Kat)";
+
 }
+
+const saved=
+
+  localStorage.getItem(KEY);
+
+if(saved){
+
+  render(
+
+    JSON.parse(saved)
+
+  );
+
+}
+
 </script>
 
 </body>
+
 </html>
